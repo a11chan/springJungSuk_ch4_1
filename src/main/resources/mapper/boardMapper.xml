@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--namespace 정의-->
+<mapper namespace="com.fastcampus.ch4.dao.BoardMapper">
+    <!--  파마미터 및 반환타입은 유추해서 써볼 것  -->
+
+    <!--게시물 총합 리턴하는 sql, id="count"-->
+    <select id="count" resultType="int">
+        select count(*) from board
+    </select>
+    <!--  게시물 전체 삭제 SQL, id:deleteAll -->
+    <delete id="deleteAll">
+        delete from board
+    </delete>
+
+    <!--  매개변수로 받은 map에서 게시물 번호와 작성자가 일치하는 게시물 삭제
+     id:delete -->
+    <delete id="delete" parameterType="map">
+        delete from board where bno=#{bno} and writer=#{writer}
+    </delete>
+
+    <!--  제목, 내용, 작성자를 BoardDto 파라미터로 받아와 insert하는 sql, #{속성명} 사용할 것, id="insert"  -->
+    <insert id="insert" parameterType="BoardDto">
+        INSERT INTO board(title, content, writer) VALUES (#{title}, #{content}, #{writer})
+    </insert>
+
+    <!--  board 테이블의 모든 게시물을 출력(컬럼명 모두 기입), reg_date와 bno 순으로 내림차순 정렬, id="selectAll"  -->
+    <select id="selectAll" resultType="BoardDto">
+      select bno, title, content, writer, view_cnt, comment_cnt, reg_date, up_date
+      from board
+      order by reg_date desc, bno desc
+    </select>
+
+    <!--  board 테이블의 모든 게시물을 출력(컬럼명 모두 기입) id="selectFromBoard"  -->
+    <sql id="selectFromBoard">
+        select bno, title, content, writer, view_cnt, comment_cnt, reg_date, up_date
+        from board
+    </sql>
+
+    <!--  bno가 일치하는 게시물의 행을 반환, <include> 사용, id="select"  -->
+    <select id="select" parameterType="int" resultType="BoardDto">
+      <include refid="selectFromBoard"/>
+      where bno=#{bno}
+    </select>
+
+    <!--  reg_date와 bno가 각각 내림차순으로 정렬된 board 테이블의 행들을 반환,
+    map으로 받은 offset과 pageSize를 통해 결과물 출력 수 제한, <include> 사용, id="selectPage"  -->
+    <select id="selectPage" resultType="BoardDto" parameterType="map">
+        <include refid="selectFromBoard"></include>
+        order by reg_date desc, bno desc
+        limit #{offset}, #{postingListSize}
+    </select>
+
+    <!--  bno와 일치하는 게시물의 title과 content를 update하고
+    up_date 속성값은 현재시각을 입력해주는 함수로 처리
+    필요한 속성값은 BoardDto에서 가져옴 id="update"-->
+    <!-- **4.06 수정 시에도 작성자 체크 로직 추가   -->
+    <update id="update" parameterType="BoardDto">
+        update board
+        set title = #{title}, content = #{content}, up_date = now()
+        where bno = #{bno} and writer = #{writer}
+    </update>
+
+
+    <!--  bno가 일치하는 행의 comment_cnt의 수를 기존값에 파라미터 cnt를 더한 값만큼 대입
+    필요한 정보는 map을 통해 받음 id="updateCommentCnt" -->
+    <update id="updateCommentCnt" parameterType="map">
+        update board
+        set comment_cnt = comment_cnt + #{cnt}
+        where bno = #{bno}
+    </update>
+
+    <!--  외부에서 받은 bno 속성값과 일치하는 행의 view_cnt를 1 증가시킴,
+     id="increaseViewCnt"  -->
+    <update id="increaseViewCnt" parameterType="int">
+        update board
+        set view_cnt = view_cnt+1
+        where bno = #{bno}
+    </update>
+
+    <!--  **4.08 include id는 searchCondition, 제목, 글쓴이, 제목+내용 choose문 구현  -->
+    <sql id="searchCondition">
+        <choose>
+            <when test='option=="T"'>
+                and title like concat('%',#{keyword},'%')
+            </when>
+            <when test='option=="W"'>
+                and writer like concat('%',#{keyword},'%')
+            </when>
+            <otherwise>
+                and (title like concat('%',#{keyword},'%')
+                or content like concat('%',#{keyword},'%'))
+            </otherwise>
+        </choose>
+    </sql>
+
+    <!--  **4.08 제목, 글쓴이, 제목+내용 검색 대응 가능한 쿼리 추가, choose 부분은 include 사용  -->
+    <!--  **4.07 select문 선언: id="searchSelectPage", parameterType="SearchCondition", resultType="BoardDto"  -->
+    <!--  SearchCondition typeAlias 정의하기  -->
+        <!--  include 태그를 사용하여 selectFromBoard SQL문을 포함  -->
+        <!--keyword 를 포함하는 title을 조회하여 reg_date, bno 순으로 각각 내림차순 정렬-->
+        <!--offset과 postingListSize만큼 결과 수 제한-->
+    <select id="searchSelectPage" parameterType="SearchCondition" resultType="BoardDto">
+        <include refid="selectFromBoard"/>
+        where true
+        <include refid="searchCondition"/>
+        order by reg_date desc, bno desc
+        limit #{offset}, #{postingListSize}
+    </select>
+
+    <!--  **4.08 제목, 글쓴이, 제목+내용 검색 대응 가능한 쿼리 추가, choose 부분은 include 사용  -->
+    <!--  **4.07 select문 선언: id="searchResultCount", parameterType="SearchCondition", resultType="BoardDto"  -->
+    <!--  SearchCondition typeAlias 정의하기  -->
+        <!--  keyword 를 포함하는 title을 조회한 결과 수를 출력(집계함수)-->
+    <select id="searchResultCnt" parameterType="SearchCondition" resultType="int">
+        select count(*)
+        from board
+        where true
+        <include refid="searchCondition"/>
+    </select>
+</mapper>
