@@ -81,12 +81,24 @@ public class BoardDaoImpl implements BoardDao {
   // **4.07 namespace+"searchSelectPage"의 결과를 반환하는 searchSelectPage 메서드 선언
   @Override
   public List<BoardDto> searchSelectPage(SearchCondition sc) throws Exception {
-    return sqlSession.selectList(namespace+"searchSelectPage", sc);
-  } // List<E> selectList(String statement, Object parameter)
+    return sqlSession.selectList(namespace+"searchSelectPage",sc);
+  }
 
   // **4.07 namespace+"searchResultCnt"의 결과를 반환하는 searchResultCnt 메서드 선언
   @Override
   public int searchResultCnt(SearchCondition sc) throws Exception {
-    return sqlSession.selectOne(namespace+"searchResultCnt", sc);
-  } // T selectOne(String statement, Object parameter)
+    return sqlSession.selectOne(namespace+"searchResultCnt",sc);
+  }
+
+  // **4.10 게시글 번호 bno에 해당하는 댓글수를 cnt만큼 증가시키는 updateCommentCnt 메서드 선언
+  public int updateCommentCnt(Integer bno, Integer cnt) {
+    //해시맵 생성 후 Map map에 저장
+    Map map = new HashMap();
+    //map에 bno, cnt를 저장
+    map.put("bno", bno);
+    map.put("cnt", cnt);
+    //리턴문에서 mapper.xml에 지정된 id의 sql문 호출 및 파라미터 전달
+    return sqlSession.update(namespace + "updateCommentCnt", map);
+  }
+
 }

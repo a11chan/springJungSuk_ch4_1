@@ -64,13 +64,14 @@
     </update>
 
 
-    <!--  bno가 일치하는 행의 comment_cnt의 수를 기존값에 파라미터 cnt를 더한 값만큼 대입
+    <!-- **4.10 bno가 일치하는 행의 comment_cnt의 수를 기존값에 파라미터 cnt를 더한 값만큼 대입
     필요한 정보는 map을 통해 받음 id="updateCommentCnt" -->
     <update id="updateCommentCnt" parameterType="map">
         update board
         set comment_cnt = comment_cnt + #{cnt}
         where bno = #{bno}
     </update>
+
 
     <!--  외부에서 받은 bno 속성값과 일치하는 행의 view_cnt를 1 증가시킴,
      id="increaseViewCnt"  -->
@@ -81,43 +82,44 @@
     </update>
 
     <!--  **4.08 include id는 searchCondition, 제목, 글쓴이, 제목+내용 choose문 구현  -->
+    <!--  **4.08 비교대상 값(T, W)을 큰따옴표로 해야 에러 발생 안 함  -->
     <sql id="searchCondition">
         <choose>
-            <when test='option=="T"'>
-                and title like concat('%',#{keyword},'%')
+            <when test='option == "T"'>
+              and title like concat("%",#{keyword},"%")
             </when>
-            <when test='option=="W"'>
-                and writer like concat('%',#{keyword},'%')
+            <when test='option == "W"'>
+              and writer like concat("%",#{keyword},"%")
             </when>
             <otherwise>
-                and (title like concat('%',#{keyword},'%')
-                or content like concat('%',#{keyword},'%'))
+              and (title like concat("%",#{keyword},"%") or content like concat("%",#{keyword},"%"))
             </otherwise>
         </choose>
     </sql>
 
     <!--  **4.08 제목, 글쓴이, 제목+내용 검색 대응 가능한 쿼리 추가, choose 부분은 include 사용  -->
     <!--  **4.07 select문 선언: id="searchSelectPage", parameterType="SearchCondition", resultType="BoardDto"  -->
-    <!--  SearchCondition typeAlias 정의하기  -->
-        <!--  include 태그를 사용하여 selectFromBoard SQL문을 포함  -->
-        <!--keyword 를 포함하는 title을 조회하여 reg_date, bno 순으로 각각 내림차순 정렬-->
-        <!--offset과 postingListSize만큼 결과 수 제한-->
+      <!--  SearchCondition typeAlias 정의하기  -->
+      <!--  include 태그를 사용하여 selectFromBoard SQL문을 포함  -->
+      <!--keyword 를 포함하는 title을 조회하여 reg_date, bno 순으로 각각 내림차순 정렬-->
+      <!--offset과 postingListSize만큼 결과 수 제한-->
     <select id="searchSelectPage" parameterType="SearchCondition" resultType="BoardDto">
-        <include refid="selectFromBoard"/>
+        <include refid="selectFromBoard"></include>
         where true
-        <include refid="searchCondition"/>
+        <include refid="searchCondition"></include>
         order by reg_date desc, bno desc
         limit #{offset}, #{postingListSize}
     </select>
 
     <!--  **4.08 제목, 글쓴이, 제목+내용 검색 대응 가능한 쿼리 추가, choose 부분은 include 사용  -->
-    <!--  **4.07 select문 선언: id="searchResultCount", parameterType="SearchCondition", resultType="BoardDto"  -->
-    <!--  SearchCondition typeAlias 정의하기  -->
-        <!--  keyword 를 포함하는 title을 조회한 결과 수를 출력(집계함수)-->
+    <!--  **4.07 select문 선언: id="searchResultCnt", parameterType="SearchCondition", resultType="int"  -->
+      <!--  SearchCondition typeAlias 정의하기  -->
+      <!--  keyword 를 포함하는 title을 조회한 결과 수를 출력(집계함수)-->
     <select id="searchResultCnt" parameterType="SearchCondition" resultType="int">
         select count(*)
         from board
         where true
-        <include refid="searchCondition"/>
+        <include refid="searchCondition"></include>
     </select>
+
 </mapper>

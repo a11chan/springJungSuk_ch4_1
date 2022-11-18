@@ -94,18 +94,22 @@
     <input type="hidden" name="bno" value="${boardDto.bno}">
 
     <%--**4.08 사용자 입력이 가능한 부분은 c:out 태그로 출력--%>
-    <input name="title" type="text" value="<c:out value='${boardDto.title}'/>"
+    <input name="title" type="text" value="<c:out value="${boardDto.title}"/>"
            placeholder="  제목을 입력해 주세요." ${mode=="new" ? "" : "readonly='readonly'"}><br>
-    <%--**4.08 사용자 입력이 가능한 부분은 c:out 태그로 출력--%>
-    <textarea name="content" rows="20" placeholder=" 내용을 입력해 주세요." ${mode=="new" ? "" : "readonly='readonly'"}><c:out
-        value="${boardDto.content}"/></textarea><br>
+    <textarea name="content" rows="20" placeholder=" 내용을 입력해 주세요." ${mode=="new" ? "" : "readonly='readonly'"}>
+      <%--**4.08 사용자 입력이 가능한 부분은 c:out 태그로 출력--%>
+      <c:out value="${boardDto.content}" />
+    </textarea><br>
 
+    <%--**4.08 서버에서 받은 mode키의 값이 'new'이면 등록 버튼 표시하는 c:if문 --%>
     <c:if test="${mode eq 'new'}">
       <button type="button" id="writeBtn" class="btn btn-write"><i class="fa fa-pencil"></i> 등록</button>
     </c:if>
+    <%--**4.08 서버에서 받은 mode키의 값이 'new'가 아니면 글쓰기 버튼 표시하는 c:if문 --%>
     <c:if test="${mode ne 'new'}">
       <button type="button" id="writeNewBtn" class="btn btn-write"><i class="fa fa-pencil"></i> 글쓰기</button>
     </c:if>
+    <%--**4.08 게시물 객체의 작성자가 loginId 키값과 같으면 수정, 삭제 버튼 표시하는 c:if문 --%>
     <c:if test="${boardDto.writer eq loginId}">
       <button type="button" id="modifyBtn" class="btn btn-modify"><i class="fa fa-edit"></i> 수정</button>
       <button type="button" id="removeBtn" class="btn btn-remove"><i class="fa fa-trash"></i> 삭제</button>
@@ -115,21 +119,34 @@
 </div>
 <script>
   $(document).ready(function () {
+    //**4.08 익명함수를 선언하여 formCheck 변수에 저장
     let formCheck = function () {
-      let form = document.getElementById("form");
-      if (form.title.value == "") {
+      //**4.08 HTML 문서에서 form 아이디를 가진 요소를 form 변수에 저장
+      let form = document.getElementById("from");
+
+      //**4.08 form변수의 title속성의 value값이 빈문자열이면
+      if(form.title.value == "") {
+        //**4.08 알림창으로 "제목을 입력해 주세요." 메시지 출력
         alert("제목을 입력해 주세요.");
+        //**4.08 form변수의 title에 커서가 포커스되도록 함수호출
         form.title.focus();
+        //**4.08 form 요소에서 action이 발동되지 않도록 하는 boolean 반환
         return false;
       }
 
-      if (form.content.value == "") {
+      //**4.08 만약 form속성의 content속성값이 빈문자열이면
+      if(form.content == '') {
+        //**4.08 알림창에 "내용을 입력해 주세요." 출력
         alert("내용을 입력해 주세요.");
+        //**4.08 form변수의 content속성에 커서가 활성화되도록 함수 호출
         form.content.focus();
+        //**4.08 form 요소에서 action이 발동되지 않도록 하는 boolean 반환
         return false;
       }
+
+      //**4.08formCheck 함수의 리턴값으로 true 지정
       return true;
-    }
+    };
 
     $("#writeNewBtn").on("click", function () {
       location.href = "<c:url value='/board/write'/>";
@@ -140,8 +157,8 @@
       form.attr("action", "<c:url value='/board/write'/>");
       form.attr("method", "post");
 
-      if (formCheck())
-        form.submit();
+      //**4.08 만약, formCheck() 함수의 값이 true이면 form 요소의 action 기능 발동하는 함수 호출
+      if(formCheck()) form.submit();
     });
 
     $("#modifyBtn").on("click", function () {
@@ -157,24 +174,27 @@
         return;
       }
 
-      // 2. 수정 상태이면, 수정된 내용을 서버로 전송
-      form.attr("action", "<c:url value='/board/modify${searchCondition.queryString}'/>");
+      // 2. 읽기전용 상태가 아니면, 수정된 내용을 서버로 전송, if문 안 씀
+      //**4.08 form 변수의 action 속성값을 c:url 태그를 이용해 다음과 같이 지정
+      //queryString 변수 사용해 modify 요청 주소 생성(검색조건 및 검색어 포함된)
+      form.attr("action", "<c:url value='/board/modify'/>${searchCondition.queryString}");
       form.attr("method", "post");
-      if (formCheck())
-        form.submit();
+      if (formCheck()) form.submit();
     });
 
     $("#removeBtn").on("click", function () {
       if (!confirm("정말로 삭제하시겠습니까?")) return;
 
       let form = $("#form");
-      form.attr("action", "<c:url value='/board/remove${searchCondition.queryString}'/>");
+      //**4.08 SearchCondition 객체 내 queryString 생성 메서드 사용해 remove 요청 주소 생성
+      form.attr("action", "<c:url value='/board/remove'/>${searchCondition.queryString}");
       form.attr("method", "post");
       form.submit();
     });
 
     $("#listBtn").on("click", function () {
-      location.href = "<c:url value='/board/list${searchCondition.queryString}'/>";
+      //**4.08 SearchCondition 객체 내 queryString 생성 메서드 사용해 modify 요청 주소 생성
+      location.href = "<c:url value='/board/list'/>${searchCondition.queryString}";
     });
   });
 </script>

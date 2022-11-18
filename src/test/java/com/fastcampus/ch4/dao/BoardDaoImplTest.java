@@ -18,63 +18,72 @@ public class BoardDaoImplTest {
   private BoardDao boardDao;
 
   //**4.07
-  // public void searchSelectPageTest() 테스트 선언 및 테스트 대상으로 지정
+  // public void searchSelectPageTest() 테스트 선언 및 테스트 대상으로 지정, 예외 던짐
   @Test
   public void searchSelectPageTest() throws Exception {
     //게시판의 모든 글 삭제
     boardDao.deleteAll();
-    //제목, 내용, 글쓴이 끝에 일련번호가 나오도록 게시글 20개 생성
+    //제목(title), 내용(content), 글쓴이(asdf) 끝에 일련번호가 나오도록 게시글 20개 생성
       //boardDto, boardDao 사용
-    for(int i = 1; i <=20; i++) {
-      BoardDto boardDto = new BoardDto("title"+i, "content"+i,"asdf"+i);
+    for(int i = 1 ; i <= 20 ; i++) {
+      BoardDto boardDto = new BoardDto("title"+i,"content"+i,"asdf"+i);
       boardDao.insert(boardDto);
     }
+
     //현재 페이지1, 포스팅 목록 크기 10, title2, T를 인수로 하는 SearchCondition 객체 생성
-    //생성 후 SearchCondition sc에 저장
-    SearchCondition sc = new SearchCondition(1, 10, "title2", "T");
+      //생성 후 SearchCondition sc에 저장
+    SearchCondition sc = new SearchCondition(1,10,"title2","T");
     //위의 검색조건 결과를 List<BoardDto> postingList 에 저장
-    List<BoardDto> postingList = boardDao.searchSelectPage(sc);
+    System.out.println("=====sc = " + sc);
+
+    List<BoardDto> list = boardDao.searchSelectPage(sc);
     //postingList크기가 2이면 테스트 통과
-    assertTrue(postingList.size() == 2);
+    assertTrue(list.size()==2);
+
 
     //**4.08 작성자 검색 테스트 추가
     //현재 페이지1, 포스팅 목록 크기 10, asdf2, W를 인수로 하는 SearchCondition 객체 생성
-    //생성 후 SearchCondition sc에 저장
-    sc = new SearchCondition(1, 10, "asdf2", "W");
-    //위의 검색조건 결과를 List<BoardDto> postingList 에 저장
-    postingList = boardDao.searchSelectPage(sc);
+    //생성 후 sc에 저장
+    sc = new SearchCondition(1,10,"asdf2","W");
+    //위의 검색조건 결과를 List<BoardDto> list 에 저장
+    System.out.println("=====sc = " + sc);
+    list = boardDao.searchSelectPage(sc);
     //postingList크기가 2이면 테스트 통과
-    assertTrue(postingList.size() == 2);
+    assertTrue(list.size()==2);
   }
+
+
 
   //**4.08 작성자 검색 테스트 추가
   //**4.07
-  // public void searchSelectPageTest() 테스트 선언 및 테스트 대상으로 지정
+  // public void searchResultCntTest() 테스트 선언 및 테스트 대상으로 지정, 예외 던짐
   @Test
   public void searchResultCntTest() throws Exception {
     //게시판의 모든 글 삭제
     boardDao.deleteAll();
-    //제목, 내용, 글쓴이 끝에 일련번호가 나오도록 게시글 20개 생성
+    //제목(title), 내용(content), 글쓴이(asdf) 끝에 일련번호가 나오도록 게시글 20개 생성
     //boardDto, boardDao 사용
-    for(int i = 1; i <=20; i++) {
-      BoardDto boardDto = new BoardDto("title"+i, "content"+i,"asdf"+i);
+    for(int i = 1 ; i <= 20 ; i++) {
+      BoardDto boardDto = new BoardDto("title"+i,"content"+i,"asdf"+i);
       boardDao.insert(boardDto);
     }
+
     //현재 페이지1, 포스팅 목록 크기 10, title2, T를 인수로 하는 SearchCondition 객체 생성
-    //생성 후 sc에 저장
-    SearchCondition sc = new SearchCondition(1, 10, "title2", "T");
+      //생성 후 sc에 저장
+    SearchCondition sc = new SearchCondition(1,10,"title2","T");
     //위의 검색조건 결과수를 rowCnt에 저장
     int rowCnt = boardDao.searchResultCnt(sc);
-    //postingList크기가 2이면 테스트 통과
-    assertTrue(rowCnt == 2);
+    //rowCnt 크기가 2이면 테스트 통과
+    assertTrue(rowCnt==2);
 
+    //**4.08
     //현재 페이지1, 포스팅 목록 크기 10, asdf2, W를 인수로 하는 SearchCondition 객체 생성
     //생성 후 sc에 저장
     sc = new SearchCondition(1, 10, "asdf2", "W");
     //위의 검색조건 결과수를 rowCnt에 저장
     rowCnt = boardDao.searchResultCnt(sc);
     //postingList크기가 2이면 테스트 통과
-    assertTrue(rowCnt == 2);
+    assertTrue(rowCnt==2);
   }
 
   @Test

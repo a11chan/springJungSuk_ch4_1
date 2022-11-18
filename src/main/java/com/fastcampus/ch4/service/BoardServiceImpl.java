@@ -72,15 +72,14 @@ public class BoardServiceImpl implements BoardService {
 
   //**4.08
   //boardDao.searchResultCnt(*)의 결과를 반환하는 getSearchResultCnt(*) 메서드 선언
-  @Override
   public int getSearchResultCnt(SearchCondition sc) throws Exception {
-      return boardDao.searchResultCnt(sc);
+    return boardDao.searchResultCnt(sc);
   }
 
   //**4.08
   //boardDao.searchSelectPage(*)의 결과를 반환하는 getSearchResultPage(*) 메서드 선언
-  @Override
   public List<BoardDto> getSearchResultPage(SearchCondition sc) throws Exception {
-      return boardDao.searchSelectPage(sc);
+    return boardDao.searchSelectPage(sc);
   }
+
 }

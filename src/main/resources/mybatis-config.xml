@@ -5,8 +5,9 @@
 <configuration>
     <typeAliases>
         <typeAlias alias="BoardDto" type="com.fastcampus.ch4.domain.BoardDto"/>
-        <!--   **4.07     -->
-        <!--   별명 SearchCondition 추가  -->
+        <!--**4.07 별명 SearchCondition 추가-->
         <typeAlias alias="SearchCondition" type="com.fastcampus.ch4.domain.SearchCondition"/>
+        <!--**4.10 CommentDto 별명 추가-->
+        <typeAlias alias="CommentDto" type="com.fastcampus.ch4.domain.CommentDto"/>
     </typeAliases>
 </configuration>

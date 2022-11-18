@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--**4.10 mapper 태그 시작, 네임스페이스 설정, dao.CommentMapper-->
+<mapper namespace="com.fastcampus.ch4.dao.CommentMapper">
+
+  <!--**4.10 id="deleteAll" 게시글 번호 bno 에 해당하는 댓글 전체 삭제 -->
+  <delete id="deleteAll" parameterType="int">
+    delete
+    from comment
+    where bno = #{bno}
+  </delete>
+
+  <!--**4.10 id="count" bno에 해당하는 댓글 수 합계를 반환 -->
+  <select id="count" parameterType="int" resultType="int">
+    select count(*)
+    from comment
+    where bno = #{bno}
+  </select>
+
+  <!--**4.10 id="delete" map에서 댓글번호(cno)와 작성자(commenter)를 받아 이에 해당하는 댓글을 삭제-->
+  <delete id="delete" parameterType="map">
+    delete
+    from comment
+    where cno = #{cno} and commenter = #{commenter}
+  </delete>
+
+  <!--**4.10 id="insert" CommentDto에서 필요한 정보를 받아 comment 테이블에 insert into-->
+    <!--reg_date, up_date 필드는 now() 함수로 처리-->
+  <insert id="insert" parameterType="CommentDto">
+    insert into comment
+        (bno, pcno, comment, commenter, reg_date, up_date)
+    values
+        (#{bno},#{pcno},#{comment},#{commenter},now(),now())
+  </insert>
+
+  <!--**4.10 id="selectAll" bno에 해당하는 select 결과를 CommentDto로 반환, reg_date, cno 각 오름차순 정렬-->
+  <select id="selectAll" parameterType="int" resultType="CommentDto">
+    select cno, bno, pcno, comment, commenter, reg_date, up_date
+    from comment
+    where bno = #{bno}
+    order by reg_date asc, cno asc
+  </select>
+
+  <!--**4.10 id="select" cno에 해당하는 select문 결과 1개를 CommentDto로 반환-->
+  <select id="select" parameterType="int" resultType="CommentDto">
+    select cno, bno, pcno, comment, commenter, reg_date, up_date
+    from comment
+    where cno = #{cno}
+  </select>
+
+  <!--**4.10 id="update" 파라미터로 받은 CommentDto에서 cno, commenter에 해당하는 댓글 중에
+   comment, up_date 필드를 수정. 단, comment는 DTO에 있는 내용, up_date 필드는 now() 함수로 처리-->
+  <update id="update" parameterType="CommentDto">
+    update comment
+        set comment = #{comment}
+          , up_date = now()
+    where cno=#{cno} and commenter = #{commenter}
+  </update>
+
+</mapper>

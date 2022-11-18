@@ -4,12 +4,13 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 // 클래스 선언 public class PageHandler {
 public class PageHandler {
+  // 게시판 목록 구현을 위한 필수 요소는 totalPostings, currentPage, postingListSize	3가지
   //**4.08 아래 4개 필드를 SearchCondition sc로 통합 및 getter/setter 생성 for pagingTest코드 오류 방지
+  private SearchCondition sc;
   //  private int currentPage; // 현재 페이지
   //  private int postingListSize; // 화면에 보이는 게시물 수
   //  private String option;
   //  private String keyword;
-  private SearchCondition sc;
 
   private int totalPostings; // 총 게시물 수
   private int pageNaviSize = 10; // 화면에 보이는 페이지 번호 수
@@ -19,8 +20,6 @@ public class PageHandler {
   private boolean showPrev;
   private boolean showNext;
 
-  // 게시판 목록 구현을 위한 필수 요소는 totalPostings, currentPage, postingListSize	3가지
-
 
   //**4.08 (int totalPostings, SearchCondition sc)를 인수로 하는 생성자 선언
   public PageHandler(int totalPostings, SearchCondition sc) {
@@ -29,18 +28,15 @@ public class PageHandler {
     this.sc = sc;
 
     //doPaging 메서드 호출
-    doPaging(totalPostings,sc);
+    doPaging(totalPostings, sc);
   }
 
   //**4.08 미사용 생성자 삭제
   //public PageHandler(int totalPostings, int currentPage) {
 
-
   //**4.08
   //생성자를 메서드로 수정 -> public void doPaging(int totalPostings, SearchCondition sc) {
   public void doPaging(int totalPostings, SearchCondition sc) {
-    this.totalPostings = totalPostings;
-
     totalNaviPages = (int) Math.ceil(totalPostings / (double) pageNaviSize);
     beginNaviPage = (sc.getCurrentPage() - 1) / pageNaviSize * pageNaviSize + 1;
     endNaviPage = Math.min(totalNaviPages, beginNaviPage + pageNaviSize - 1);

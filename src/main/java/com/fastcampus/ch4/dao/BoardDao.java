@@ -40,4 +40,6 @@ public interface BoardDao {
   int searchResultCnt(SearchCondition sc) throws Exception // T selectOne(String statement, Object parameter)
   ;
 
+  int updateCommentCnt(Integer bno, Integer cnt);
+
 }
