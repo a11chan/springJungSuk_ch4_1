@@ -36,12 +36,14 @@
   </insert>
 
   <!--**4.10 id="selectAll" bno에 해당하는 select 결과를 CommentDto로 반환, reg_date, cno 각 오름차순 정렬-->
+  <!-- **4.13 pcno가 null일 경우 cno로 출력하고 별칭을 pcno로 지정, order by 수정 - pcno cno 순으로 각 오름차순-->
   <select id="selectAll" parameterType="int" resultType="CommentDto">
-    select cno, bno, pcno, comment, commenter, reg_date, up_date
+    select cno, bno, ifnull(pcno, cno) as pcno, comment, commenter, reg_date, up_date
     from comment
     where bno = #{bno}
-    order by reg_date asc, cno asc
+    order by pcno asc, cno asc
   </select>
+
 
   <!--**4.10 id="select" cno에 해당하는 select문 결과 1개를 CommentDto로 반환-->
   <select id="select" parameterType="int" resultType="CommentDto">

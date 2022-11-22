@@ -45,8 +45,8 @@ public class CommentServiceImplTest {
 
     //위에서 가져온 bno에 해당하는 모든 댓글 삭제
     commentDao.deleteAll(bno);
-    //위에서 얻은 bno, pcno:0, comment:"hi", commenter:"qwer"을 인수로 하는 CommentDto 객체를 생성하여 commentDto에 저장
-    CommentDto commentDto = new CommentDto(bno, 0, "hi", "qwer");
+    //위에서 얻은 bno, pcno:0, comment:"hi", commenter:"asdf"을 인수로 하는 CommentDto 객체를 생성하여 commentDto에 저장
+    CommentDto commentDto = new CommentDto(bno, 0, "hi", "asdf");
     //boardDao를 이용하여 위에서 얻은 bno에 해당하는 게시물 1개의 댓글수가 0임을 검증
     assertTrue(boardDao.select(bno).getComment_cnt()==0);
     //commentService를 통해 위에서 만든 commentDto를 토대로 댓글을 DB에 등록한 결과가 1임을 검증
