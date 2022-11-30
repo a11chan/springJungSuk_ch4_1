@@ -31,15 +31,13 @@ public class CommentServiceImpl implements CommentService {
   //cno, bno, commenter를 파라미터로 하는 remove 메서드 선언, 예외 던짐
   public int remove(Integer cno, Integer bno, String commenter) throws Exception {
     //bno에 해당하는 게시글의 댓글수를 -1 감소시키고 그 결과를 int rowCnt에 저장
-    int rowCnt = boardDao.updateCommentCnt(bno, -1);
-    //rowCnt를 soutv
-    System.out.println("rowCnt = " + rowCnt);
-//      throw new Exception("test error");
+    if(boardDao.updateCommentCnt(bno, -1) < 1) {
+      throw new Exception("update comment count error from board table");
+    }
+    // throw new Exception("test error");
+
     //cno, commenter에 해당하는 댓글을 삭제하고 그 결과를 rowCnt에 저장
-    rowCnt = commentDao.delete(cno, commenter);
-    //rowCnt.soutv
-    System.out.println("rowCnt = " + rowCnt);
-    //rowCnt를 반환
+    int rowCnt = commentDao.delete(cno, commenter);
     return rowCnt;
   }
 

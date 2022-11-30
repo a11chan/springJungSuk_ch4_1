@@ -19,7 +19,7 @@ public class SimpleRestController {
 
   @GetMapping("/test2")
   public String test2() {
-    return "comment";
+    return "comment2";
   }
 
 }

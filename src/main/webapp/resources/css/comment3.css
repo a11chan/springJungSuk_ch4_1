@@ -1,0 +1,191 @@
+@import url(color.css);
+
+.commentArea {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.commentArea ul {
+  border:  1px solid rgb(235,236,239);
+}
+
+.commentArea li {
+  background-color: #f9f9fa;
+  list-style-type: none;
+  border-bottom : 1px solid rgb(235,236,239);
+  padding : 18px 18px 0 18px;
+}
+.commentArea li.reply {
+  margin-left: 36px;
+}
+
+.commentArea #commentList {
+  width : 100%;
+  margin : auto;
+}
+
+.commentArea .comment-content {
+  overflow-wrap: break-word;
+}
+
+.commentArea .comment-bottom {
+  font-size:9pt;
+  color : rgb(97,97,97);
+  padding: 8px 0 8px 0;
+}
+
+.commentArea .comment-bottom > a {
+  display:inline-block;
+  color : rgb(97,97,97);
+  text-decoration: none;
+  margin : 0 6px 0 0;
+  cursor:pointer;
+}
+
+.commentArea .comment-area {
+  padding : 0 0 0 46px;
+}
+
+.commentArea .commenter {
+  font-size:12pt;
+  font-weight:bold;
+}
+
+.commentArea .commenter-writebox {
+  padding : 15px 20px 20px 20px;
+}
+
+.commentArea .comment-img {
+  font-size:36px;
+  position: absolute;
+}
+
+.commentArea .comment-item {
+  position:relative;
+}
+
+.commentArea .up_date {
+  margin : 0 8px 0 0;
+}
+
+.commentArea #comment-writebox {
+  margin-top:16px;
+  background-color: white;
+  border : 1px solid #e5e5e5;
+  border-radius: 5px;
+}
+
+.commentArea textarea {
+  display: block;
+  width: 100%;
+  min-height: 17px;
+  padding: 0 20px;
+  border: 0;
+  outline: 0;
+  font-size: 13px;
+  resize: none;
+  box-sizing: border-box;
+  background: transparent;
+  overflow-wrap: break-word;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.commentArea #comment-writebox-bottom {
+  padding : 3px 10px 10px 10px;
+  min-height: 50px;
+}
+
+.commentArea .btn {
+  font-size:10pt;
+  color : black;
+  background-color: #eff0f2;
+  text-decoration: none;
+  padding : 9px 10px 9px 10px;
+  border-radius: 5px;
+  float : right;
+}
+
+.commentArea #btn-write-comment,
+.commentArea #btn-write-reply {
+  color : #009f47;
+  background-color: #e0f8eb;
+}
+
+.commentArea #btn-cancel-reply {
+  background-color: #eff0f2;
+  margin-right : 10px;
+}
+
+.commentArea #btn-write-modify {
+  color : #009f47;
+  background-color: #e0f8eb;
+}
+
+.commentArea #btn-cancel-modify {
+  margin-right : 10px;
+}
+
+.commentArea #reply-writebox {
+  display : none;
+  background-color: white;
+  border : 1px solid #e5e5e5;
+  border-radius: 5px;
+  margin : 10px;
+}
+
+.commentArea #reply-writebox-bottom {
+  padding : 3px 10px 10px 10px;
+  min-height : 50px;
+}
+
+.commentArea #modify-writebox {
+  background-color: white;
+  border : 1px solid #e5e5e5;
+  border-radius: 5px;
+  margin : 10px;
+}
+
+.commentArea #modify-writebox-bottom {
+  padding : 3px 10px 10px 10px;
+  min-height : 50px;
+}
+
+/* The Modal (background) */
+.commentArea .modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.commentArea .modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 50%;
+}
+
+/* The Close Button */
+.commentArea .close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.commentArea .close:hover,
+.commentArea .close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}

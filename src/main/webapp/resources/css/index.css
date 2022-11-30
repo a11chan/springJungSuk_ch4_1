@@ -1,0 +1,16 @@
+@import url(color.css);
+
+.main {
+  display: flex;
+  height: calc(100vh - 48px);
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.main__logo {
+  width:50%;
+  height: 50%;
+  background: no-repeat center url('../imgs/logoSample.jpg');
+  background-size: contain;
+}

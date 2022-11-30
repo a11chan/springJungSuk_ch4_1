@@ -34,11 +34,9 @@ public class CommentController {
     //매개변수로는 dto, cno, session(for 로그인 id 획득)
     //댓글 DTO에 JSON 요청 데이터를 저장, cno에는 URL에 입력된 변수를 그대로 대입하는 애너테이션 붙임
   public ResponseEntity<String> modify(@RequestBody CommentDto dto
-      , @PathVariable Integer cno , HttpSession httpSession) {
-    //String commenter = (String) session.getAttribute("id");
+      , @PathVariable Integer cno , HttpSession session) {
+    String commenter = (String) session.getAttribute("id");
       //View단 완성 시 적용, 일단 테스트를 위해 아래처럼 하드코딩
-    //댓글 작성자 "asdf"를 String commenter에 저장
-    String commenter = "asdf";
     //dto의 commenter에 위에서 선언한 commenter 참조변수 대입
     dto.setCommenter(commenter);
     //dto의 cno에 매개변수로 받은 cno 저장
@@ -76,9 +74,7 @@ public class CommentController {
       //애너테이션을 사용하여 JSON 요청 정보를 dto에 저장되도록 할 것
   public ResponseEntity<String> write(@RequestBody CommentDto dto, Integer bno
       , HttpSession session) {
-    //String commenter = (String) session.getAttribute("id");
-    //"asdf"를 String commenter에 저장
-    String commenter = "asdf";
+    String commenter = (String) session.getAttribute("id");
     //dto의 필드에 위 commenter를 저장
     dto.setCommenter(commenter);
     //dto의 필드에 파라미터로 받은 bno를 저장
@@ -114,9 +110,7 @@ public class CommentController {
     //파라미터로는 cno, bno, session
     //요청 URL 중 cno 위치에 있는 값을 그대로 cno에 대입하는 애너테이션 붙일 것
   public ResponseEntity<String> remove(@PathVariable Integer cno, Integer bno, HttpSession session) {
-    //String commenter = (String) session.getAttribute("id");
-    //"asdf"를 String commenter에 저장
-    String commenter = "asdf";
+    String commenter = (String) session.getAttribute("id");
 
     //try문
     try {

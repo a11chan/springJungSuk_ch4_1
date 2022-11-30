@@ -121,7 +121,7 @@
 
 
   //댓글을 가져올 게시물 번호 5285를 bno에 저장, 임시 하드코딩 추후 boardList에서 전달받아 EL로 처리
-  let bno = 5285;
+  let bno = 5287;
 
   //bno를 매개변수로 하는 showList 함수 호출
   showList(bno);
@@ -271,7 +271,6 @@
       //답급 입력폼 출력 - css 속성 변경
       $("#replyForm").css("display", "block");
     });
-
 
     // **4.13 답글 입력폼의 등록 버튼 클릭 시 대댓글 등록 기능
     // "#wrtRepBtn" 클릭 시 익명함수 실행 선언부 시작

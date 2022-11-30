@@ -15,7 +15,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>fastcampus</title>
+  <title>스프링의 정석 실습</title>
   <link rel="stylesheet" href="<c:url value='/css/menu.css'/>">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
@@ -70,6 +70,9 @@
       border: 1px solid #ccc;
       color: gray;
     }
+    .search-option:focus {
+      border: 1px solid var(--main-color);
+    }
 
     .search-option > option {
       text-align: center;
@@ -83,6 +86,9 @@
       width: 300px;
       font-size: 15px;
       padding: 5px 7px;
+    }
+    .search-input:focus {
+      border: 1px solid var(--main-color);
     }
 
     .search-input::placeholder {
@@ -99,6 +105,7 @@
       align-items: center;
       justify-content: center;
       font-size: 15px;
+      cursor: pointer;
     }
 
     .search-button:hover {
@@ -147,10 +154,6 @@
       text-align: right;
     }
 
-    td.title:hover {
-      text-decoration: underline;
-    }
-
     .paging {
       color: black;
       width: 100%;
@@ -188,15 +191,12 @@
       margin-left: 30px;
     }
 
-    .btn-write:hover {
-      text-decoration: underline;
-    }
   </style>
 </head>
 <body>
 <div id="menu">
   <ul>
-    <li id="logo">fastcampus</li>
+    <li id="logo">company</li>
     <li><a href="<c:url value='/'/>">Home</a></li>
     <li><a href="<c:url value='/board/list'/>">Board</a></li>
     <li>
@@ -264,7 +264,7 @@
             <%-- ph.sc에 queryString 필드가 없으면 getQueryString으로 자동 호출하는 것 같음 --%>
             <a href="<c:url value='/board/read'/>${ph.sc.queryString}&bno=${boardDto.bno}">
               <%--**4.08 <a>안에 들어갈 게시물 제목을 c:out 태그로 내용 표현--%>
-              <c:out value="${boardDto.title}"/>
+              <c:out value="${boardDto.title}"/> <span>(<c:out value="${boardDto.comment_cnt}"/>)</span>
             </a>
           </td>
           <td class="writer">${boardDto.writer}</td>
