@@ -49,6 +49,7 @@
             border : none;
             border-radius: 5px;
             margin : 20px 0 30px 0;
+            cursor:pointer;
         }
         #title {
             font-size : 50px;

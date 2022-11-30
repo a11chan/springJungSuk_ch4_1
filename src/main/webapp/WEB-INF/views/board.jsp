@@ -236,8 +236,12 @@
         tmp += '<div class="comment-bottom">';
         tmp += '<span class="up_date">'+dateToString(comment.up_date)+'</span>';
         tmp += '<a href="#" class="btn-write-reply" data-cno="' +comment.cno+ '" data-bno="'+comment.bno+'" data-pcno="'+comment.pcno+'">답글쓰기</a>';
-        tmp += '<a href="#" class="btn-modify-comment" data-cno="' +comment.cno+ '" data-bno="'+comment.bno+'" data-pcno="'+comment.pcno+'">수정</a>';
-        tmp += '<a href="#" class="btn-delete" data-cno="' +comment.cno+ '" data-bno="'+comment.bno+'" data-pcno="'+comment.pcno+'">삭제</a>';
+
+        if(comment.commenter == "${loginId}") {
+          tmp += '<a href="#" class="btn-modify-comment" data-cno="' + comment.cno + '" data-bno="' + comment.bno + '" data-pcno="' + comment.pcno + '">수정</a>';
+          tmp += '<a href="#" class="btn-delete" data-cno="' + comment.cno + '" data-bno="' + comment.bno + '" data-pcno="' + comment.pcno + '">삭제</a>';
+        }
+
         tmp += '</div>';
         tmp += '</div>';
         tmp += "</li>";
