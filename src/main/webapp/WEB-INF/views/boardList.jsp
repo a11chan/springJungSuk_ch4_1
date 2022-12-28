@@ -308,7 +308,7 @@
           <c:if test="${ph.showPrev}">
             <%--**4.08
             쿼리스트링빌더로 만들어진 주소를 c:url을 사용해 이전 네비 페이지로 갈 수 있게 넣기 --%>
-            <a class="page" href="<c:url value='/board/list${ph.sc.getQueryString(ph.beginNaviPage - 1)}'/>"/>">&lt;</a>
+            <a class="page" href="<c:url value='/board/list${ph.sc.getQueryString(ph.beginNaviPage - 1)}'/>"/>&lt;</a>
           </c:if>
           <c:forEach var="i" begin="${ph.beginNaviPage}" end="${ph.endNaviPage}">
             <%--**4.08 현재 페이지가 페이징 번호와 일치할 때 삼항연산자로

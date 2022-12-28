@@ -10,6 +10,7 @@ import com.fastcampus.ch4.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -55,7 +56,7 @@ public class RegisterController {
   //회원가입 처리에 따른 View 페이지를 보여주는 save 메서드 선언
   //파라미터로 User 객체, User 객체를 자동검증하는 애너테이션, 검증 결과를 담는 result 객체
   @PostMapping("/add")
-  public String save(@Valid User user, BindingResult result) throws Exception {
+  public String save(@Valid User user, BindingResult result, Model model) throws Exception {
     // 데이터 타입 변환, 검증 결과를 콘솔에 출력
     // 회원가입 View에서 받은 User 객체 정보를 콘솔에 출력
     System.out.println("result="+result);
@@ -69,7 +70,8 @@ public class RegisterController {
       if(rowCnt!=FAIL)
         return "registerInfo";
     }    
-    // if문을 다 통과 했다면 "registerForm" View 리턴
+
+    // 에러 발생 시 기존 회원가입 페이지 리턴
     return "registerForm";
   }
 }
