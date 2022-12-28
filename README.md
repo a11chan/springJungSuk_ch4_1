@@ -7,6 +7,7 @@
 
 ## 1. 제작 기간
 * 2022/09/15 ~ 2022/11/22  
+(강의 수강 기간 포함)  
 
 </br>
 
@@ -30,6 +31,7 @@
 
 ## 3. ERD 설계
 ![](https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Ff129d24f-e486-445d-bc44-297a4d280150%2FUntitled.png?id=f619e8f6-2c9e-4b91-be93-ebb471605512&table=block&spaceId=d45b6527-cc9f-4af9-b7e8-975463d8b2e5&width=2000&userId=504d5d0d-ce4c-40f0-8ccd-2a8fd23e22dc&cache=v2)
+[원본 보기🔍](https://www.erdcloud.com/p/FiJ24GFdndCGSCDXG)
 
 </br>
 
