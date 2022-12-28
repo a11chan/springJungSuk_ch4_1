@@ -91,14 +91,14 @@
 <form:form modelAttribute="user"> <!-- @Valid User user -->
   <div class="title">Register</div>
   <div id="msg" class="msg">
-    <% /* ${URLDecoder.decode(param.msg, "utf-8")} */ %>
+    <%--${URLDecoder.decode(param.msg, "utf-8")}--%>
     <form:errors path="id"/>
     <form:errors path="pwd"/>
   </div>
   <label>아이디</label>
-  <input class="input-field" type="text" name="id" placeholder="8~12자리의 영대소문자와 숫자 조합" value="<c:out value='${user.id}'/>">
+  <input class="input-field" type="text" name="id" placeholder="5~12자리의 영대소문자와 숫자 조합" value="<c:out value='${user.id}'/>">
   <label>비밀번호</label>
-  <input class="input-field" type="password" name="pwd" placeholder="8~12자리의 영대소문자와 숫자 조합" value="<c:out value='${user.pwd}'/>">
+  <input class="input-field" type="password" name="pwd" placeholder="5~12자리의 영대소문자와 숫자 조합" value="<c:out value='${user.pwd}'/>">
   <label>이름</label>
   <input class="input-field" type="text" name="name" placeholder="홍길동" value="<c:out value='${user.name}'/>">
   <label>이메일</label>
