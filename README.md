@@ -114,9 +114,3 @@ XXS 방지를 위한 LUCY 필터는 @RequestBody로 전달되는 JSON 요청을 
 - 추후 적용할 다른 방법([Spring Boot에서 JSON API에 XSS Filter 적용하기](https://jojoldu.tistory.com/470))
 
 </details>
-
-</br>
-
-## 6. 회고 / 느낀점
->아주 기초적인 Spring MVC 패턴 게시판을 만드는 일에도 cloc 결과에 나와 있듯이 많은 파일과 코드가 필요함에 놀랐습니다.  
->아직 구현되지 않은 첨부파일 업로드나 SNS 로그인, 스프링 시큐리티 같은 기술 등을 적용하면서 더 최적화하고 좋은 구조로 설계할 수 있도록 고민하겠습니다.
